@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block titre %}Tableau de bord Commerçant - Djaapp{% endblock %}
+{% block nav_boutique %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-3">
+  <!-- Statistiques simples -->
+  <div class="col-6 col-md-3">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center">
+        <div class="h6 text-muted">Ventes (jour)</div>
+        <div class="h4">{{ stats.ventes_jour if stats else 0 }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center">
+        <div class="h6 text-muted">Ventes (semaine)</div>
+        <div class="h4">{{ stats.ventes_semaine if stats else 0 }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center">
+        <div class="h6 text-muted">Commandes</div>
+        <div class="h4">{{ stats.nb_commandes if stats else 0 }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center">
+        <div class="h6 text-muted">Produits</div>
+        <div class="h4">{{ stats.nb_produits if stats else 0 }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="col-12">
+    <div class="d-grid d-sm-flex gap-2">
+      <a class="btn btn-primaire" href="/creer-boutique"><i class="fas fa-plus me-1"></i>Créer boutique</a>
+      <a class="btn btn-secondaire" href="/ajouter-produit"><i class="fas fa-plus me-1"></i>Ajouter produit</a>
+      <a class="btn btn-outline-secondary" href="/commandes-commercant"><i class="fas fa-box me-1"></i>Gérer commandes</a>
+    </div>
+  </div>
+
+  <!-- Liste produits -->
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 mb-0">Mes produits</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Catégorie</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if produits and produits|length > 0 %}
+                {% for p in produits %}
+                <tr>
+                  <td>{{ p.id }}</td>
+                  <td>{{ p.nom }}</td>
+                  <td>{{ '%.2f'|format(p.prix) }}</td>
+                  <td>{{ p.stock }}</td>
+                  <td>{{ p.categorie or '-' }}</td>
+                  <td class="text-end">
+                    <form method="post" action="/supprimer-produit" class="d-inline">
+                      <input type="hidden" name="id_produit" value="{{ p.id }}">
+                      <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
+                    <a class="btn btn-sm btn-outline-secondary" href="/editer-produit?id={{ p.id }}"><i class="fas fa-pen"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="6" class="text-center text-muted">Aucun produit pour le moment.</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

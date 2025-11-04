@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block titre %}Connexion Client - Djaapp{% endblock %}
+
+{% block contenu %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card ombre-douce border-0">
+        <div class="card-body p-4">
+          <div class="text-center mb-4">
+            <i class="fas fa-user-circle fa-3x text-primaire mb-3"></i>
+            <h2 class="h4 fw-semibold">Connexion Client</h2>
+            <p class="text-muted small">Accédez à votre compte Djaapp</p>
+          </div>
+
+          <form method="post" action="/client/connexion" novalidate>
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="champ-telephone">
+                <i class="fas fa-phone me-1"></i>Téléphone *
+              </label>
+              <input id="champ-telephone" name="telephone" type="tel" class="form-control form-control-lg" required placeholder="+225 XX XX XX XX" value="{{ request.form.telephone if request.form.telephone else '' }}">
+              <div class="form-text">Format: +225XXXXXXXXX</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold" for="champ-mot-de-passe">
+                <i class="fas fa-lock me-1"></i>Mot de passe
+              </label>
+              <input id="champ-mot-de-passe" name="mot_de_passe" type="password" class="form-control form-control-lg" placeholder="Votre mot de passe (optionnel)">
+              <div class="form-text">Laissez vide pour connexion OTP</div>
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+              <button class="btn btn-primaire btn-lg fw-semibold" type="submit">
+                <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+              </button>
+            </div>
+
+            <div class="text-center">
+              <p class="mb-2">Pas encore de compte ?</p>
+              <a href="/client/inscription" class="btn btn-outline-primaire">
+                <i class="fas fa-user-plus me-1"></i>S'inscrire
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="/" class="text-decoration-none">
+          <i class="fas fa-arrow-left me-1"></i>Retour à l'accueil
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

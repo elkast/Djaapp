@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block titre %}Mes Produits - Djaapp{% endblock %}
+{% block nav_produits %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 mb-0 fw-semibold">Mes produits</h1>
+      <button class="btn btn-primaire" data-bs-toggle="modal" data-bs-target="#modalAjouterProduit">
+        <i class="fas fa-plus me-2"></i>Ajouter un produit
+      </button>
+    </div>
+  </div>
+
+  {% if produits %}
+  <div class="col-12">
+    <div class="row g-3">
+      {% for produit in produits %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 ombre-douce border-0">
+          {% if produit.image %}
+          <img src="{{ url_for('static', filename=produit.image) }}" class="card-img-top" alt="{{ produit.nom }}" style="height: 150px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h6 class="card-title fw-semibold mb-2">{{ produit.nom }}</h6>
+            <p class="card-text small text-muted mb-2">{{ produit.description or 'Aucune description' }}</p>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold text-primaire">{{ produit.prix }} FCFA</span>
+              <span class="badge bg-{{ 'success' if produit.stock > 10 else 'warning' if produit.stock > 0 else 'danger' }}">
+                {{ produit.stock }} en stock
+              </span>
+            </div>
+            <p class="card-text small text-muted mb-3">
+              <i class="fas fa-store me-1"></i>{{ produit.nom_boutique }}
+            </p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalModifierProduit" onclick="modifierProduit({{ produit.id }}, '{{ produit.nom }}', '{{ produit.description or '' }}', {{ produit.prix }}, {{ produit.stock }}, '{{ produit.categorie or '' }}')">
+                <i class="fas fa-edit me-1"></i>Modifier
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="supprimerProduit({{ produit.id }}, '{{ produit.nom }}')">
+                <i class="fas fa-trash me-1"></i>Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center py-5">
+        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+        <h5 class="text-muted fw-semibold">Aucun produit</h5>
+        <p class="text-muted">Vous n'avez pas encore ajouté de produits.</p>
+        <button class="btn btn-primaire" data-bs-toggle="modal" data-bs-target="#modalAjouterProduit">
+          <i class="fas fa-plus me-2"></i>Ajouter mon premier produit
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Modal Ajouter Produit -->
+<div class="modal fade" id="modalAjouterProduit" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-semibold">Ajouter un produit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" action="/commercant/produit/ajouter" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Boutique *</label>
+            <select name="id_boutique" class="form-select" required>
+              {% for boutique in boutiques %}
+              <option value="{{ boutique.id }}">{{ boutique.nom_boutique }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Nom du produit *</label>
+            <input type="text" name="nom" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea name="description" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Prix (FCFA) *</label>
+              <input type="number" name="prix" class="form-control" min="0" step="0.01" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Stock *</label>
+              <input type="number" name="stock" class="form-control" min="0" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Catégorie</label>
+            <input type="text" name="categorie" class="form-control" placeholder="ex: Alimentaire, Électronique">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Image du produit</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
+            <div class="form-text">Formats acceptés: JPG, PNG, GIF. Taille max: 2MB.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primaire">Ajouter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Modifier Produit -->
+<div class="modal fade" id="modalModifierProduit" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-semibold">Modifier un produit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="post" action="" id="formModifierProduit" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Nom du produit *</label>
+            <input type="text" name="nom" id="modifNom" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea name="description" id="modifDescription" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Prix (FCFA) *</label>
+              <input type="number" name="prix" id="modifPrix" class="form-control" min="0" step="0.01" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Stock *</label>
+              <input type="number" name="stock" id="modifStock" class="form-control" min="0" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Catégorie</label>
+            <input type="text" name="categorie" id="modifCategorie" class="form-control" placeholder="ex: Alimentaire, Électronique">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Image du produit</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
+            <div class="form-text">Formats acceptés: JPG, PNG, GIF. Taille max: 2MB.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primaire">Modifier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

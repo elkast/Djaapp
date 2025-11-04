@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block titre %}Explorer - Djaapp{% endblock %}
+{% block nav_dashboard %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <!-- Recherche -->
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <form method="get" action="/boutiques/recherche" class="d-flex gap-2" novalidate>
+          <input type="text" name="q" class="form-control" placeholder="Rechercher une boutique..." value="{{ query if query else '' }}">
+          <button class="btn btn-primaire" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boutiques populaires -->
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 mb-0 fw-semibold">Boutiques populaires</h2>
+      <a class="btn btn-sm btn-outline-primary" href="/boutiques/recherche">
+        <i class="fas fa-search me-1"></i>Voir tout
+      </a>
+    </div>
+    <div class="row g-3">
+      {% for boutique in boutiques %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 ombre-douce border-0">
+          <div class="card-body text-center">
+            <i class="fas fa-store fa-3x text-muted mb-3"></i>
+            <h6 class="card-title fw-semibold">{{ boutique.nom_boutique }}</h6>
+            <p class="card-text small text-muted">{{ boutique.description or 'Boutique locale' }}</p>
+            <a href="/boutique/{{ boutique.id }}" class="btn btn-primaire btn-sm fw-semibold">
+              <i class="fas fa-eye me-1"></i>Visiter
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% if not boutiques %}
+      <div class="col-12">
+        <div class="text-center py-5">
+          <i class="fas fa-store fa-4x text-muted mb-3"></i>
+          <h5 class="text-muted">Aucune boutique trouvée</h5>
+          <p class="text-muted">Soyez le premier à créer une boutique !</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h5 class="card-title fw-semibold mb-3">Actions rapides</h5>
+        <div class="d-grid d-sm-flex gap-2">
+          <a class="btn btn-primaire" href="/client/panier">
+            <i class="fas fa-shopping-cart me-2"></i>Mon panier
+          </a>
+          <a class="btn btn-secondaire" href="/client/commandes">
+            <i class="fas fa-box me-2"></i>Mes commandes
+          </a>
+          <a class="btn btn-outline-secondary" href="/client/profil">
+            <i class="fas fa-user me-2"></i>Mon profil
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

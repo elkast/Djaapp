@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block titre %}Mon panier - Djaapp{% endblock %}
+{% block nav_commandes %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-3">
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h1 class="h5 mb-3">Mon panier</h1>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th>Produit</th>
+                <th style="width: 130px;">Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if items and items|length > 0 %}
+                {% for it in items %}
+                <tr>
+                  <td>{{ it.nom }}</td>
+                  <td>
+                    <form method="post" action="/panier/modifier" class="d-inline">
+                      <input type="hidden" name="id_produit" value="{{ it.id }}">
+                      <div class="input-group input-group-sm">
+                        <input type="number" class="form-control" name="quantite" value="{{ it.quantite }}" min="1">
+                        <button class="btn btn-outline-secondary" type="submit">OK</button>
+                      </div>
+                    </form>
+                  </td>
+                  <td>{{ '%.2f'|format(it.prix_unitaire) }} FCFA</td>
+                  <td>{{ '%.2f'|format(it.prix_unitaire * it.quantite) }} FCFA</td>
+                  <td class="text-end">
+                    <form method="post" action="/panier/supprimer" class="d-inline">
+                      <input type="hidden" name="id_produit" value="{{ it.id }}">
+                      <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="5" class="text-center text-muted">Votre panier est vide.</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <a class="btn btn-outline-secondary" href="/">Continuer mes achats</a>
+          <div class="fw-semibold">Total: {{ '%.2f'|format(total or 0) }} FCFA</div>
+        </div>
+        <hr>
+        <div class="d-grid d-sm-flex gap-2">
+          <form method="post" action="/panier/vider" class="d-inline">
+            <button class="btn btn-outline-danger" type="submit">Vider le panier</button>
+          </form>
+          <a class="btn btn-primaire ms-sm-auto" href="/paiement">Passer commande</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block titre %}{{ boutique.nom_boutique if boutique else 'Boutique' }} - Djaapp{% endblock %}
+{% block nav_accueil %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-3">
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+          <div>
+            <h1 class="h5 mb-1">{{ boutique.nom_boutique }}</h1>
+            <p class="text-muted mb-0">{{ boutique.description or 'Bienvenue dans notre boutique.' }}</p>
+          </div>
+          {% if boutique.qr_code %}
+          <div class="mt-3 mt-md-0">
+            <img src="{{ boutique.qr_code }}" alt="QR boutique" class="img-fluid rounded border" style="max-width: 150px;">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if produits and produits|length > 0 %}
+    {% for p in produits %}
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card h-100 ombre-douce border-0">
+        {% if p.image %}
+          <img src="{{ p.image }}" alt="{{ p.nom }}" class="card-img-top">
+        {% else %}
+          <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+            <i class="fas fa-image text-muted"></i>
+          </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h2 class="h6">{{ p.nom }}</h2>
+          <div class="text-muted small mb-2">{{ p.categorie or '-' }}</div>
+          <div class="fw-semibold mb-3">{{ '%.2f'|format(p.prix) }} FCFA</div>
+          <form method="post" action="/panier/ajouter" class="mt-auto">
+            <input type="hidden" name="id_produit" value="{{ p.id }}">
+            <div class="input-group">
+              <input type="number" class="form-control" name="quantite" value="1" min="1" max="{{ p.stock }}">
+              <button class="btn btn-primaire" type="submit"><i class="fas fa-cart-plus me-1"></i>Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="col-12"><div class="alert alert-info">Aucun produit disponible pour le moment.</div></div>
+  {% endif %}
+</div>
+{% endblock %}

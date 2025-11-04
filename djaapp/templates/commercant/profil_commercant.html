@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block titre %}Mon Profil - Commerçant{% endblock %}
+{% block nav_profil %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <!-- Profil Commerçant -->
+  <div class="col-lg-8">
+    <div class="card ombre-douce">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-user"></i> Mon Profil Commerçant</h5>
+        <a href="{{ url_for('modifier_profil_commercant') }}" class="btn btn-light btn-sm">
+          <i class="fas fa-edit"></i> Modifier
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-4 text-center">
+            {% if session.get('image') %}
+            <img src="{{ url_for('static', filename=session.image) }}" class="rounded-circle mb-3" alt="Photo de profil" style="width: 120px; height: 120px; object-fit: cover;">
+            {% else %}
+            <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+              <i class="fas fa-user fa-3x text-muted"></i>
+            </div>
+            {% endif %}
+            <h6 class="fw-semibold">{{ session.get('nom', 'Non défini') }}</h6>
+          </div>
+          <div class="col-md-8">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <h6 class="text-muted mb-2">Informations Personnelles</h6>
+                <p class="mb-1"><strong>Email:</strong> {{ session.get('email', 'Non défini') }}</p>
+                <p class="mb-1"><strong>Téléphone:</strong> {{ session.get('telephone', 'Non défini') }}</p>
+                <p class="mb-1"><strong>Adresse:</strong> {{ session.get('adresse', 'Non défini') }}</p>
+                {% if session.get('latitude') and session.get('longitude') %}
+                <p class="mb-1"><strong>Position:</strong> {{ session.latitude }}, {{ session.longitude }}</p>
+                {% endif %}
+              </div>
+              <div class="col-sm-6">
+                <h6 class="text-muted mb-2">Statistiques</h6>
+                <p class="mb-1"><strong>Boutiques:</strong> {{ stats.nb_boutiques if stats else 0 }}</p>
+                <p class="mb-1"><strong>Produits:</strong> {{ stats.nb_produits if stats else 0 }}</p>
+                <p class="mb-1"><strong>Commandes:</strong> {{ stats.nb_commandes if stats else 0 }}</p>
+                <p class="mb-1"><strong>Date d'inscription:</strong> {{ session.get('date_inscription', 'Non défini') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boutiques -->
+  <div class="col-lg-4">
+    <div class="card ombre-douce">
+      <div class="card-header bg-success text-white">
+        <h6 class="mb-0"><i class="fas fa-store"></i> Mes Boutiques</h6>
+      </div>
+      <div class="card-body">
+        {% if boutiques %}
+        <div class="list-group list-group-flush">
+          {% for boutique in boutiques %}
+          <div class="list-group-item px-0">
+            <div class="d-flex align-items-center">
+              {% if boutique.image %}
+              <img src="{{ url_for('static', filename=boutique.image) }}" class="rounded me-3" alt="{{ boutique.nom_boutique }}" style="width: 50px; height: 50px; object-fit: cover;">
+              {% else %}
+              <div class="bg-light rounded d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                <i class="fas fa-store text-muted"></i>
+              </div>
+              {% endif %}
+              <div class="flex-grow-1">
+                <h6 class="mb-0 fw-semibold">{{ boutique.nom_boutique }}</h6>
+                <small class="text-muted d-block">{{ boutique.description or 'Aucune description' }}</small>
+                <div class="mt-1">
+                  <small class="text-success">
+                    <i class="fas fa-box"></i> {{ boutique.nb_produits }} produits
+                  </small>
+                  <small class="text-primary ms-2">
+                    <i class="fas fa-shopping-cart"></i> {{ boutique.nb_commandes }} cmd
+                  </small>
+                  <small class="text-warning ms-2">
+                    <i class="fas fa-euro-sign"></i> {{ "%.0f"|format(boutique.total_ventes) }}€
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+          <i class="fas fa-store fa-2x text-muted mb-2"></i>
+          <p class="text-muted small">Aucune boutique créée</p>
+          <a href="{{ url_for('creer_boutique_page') }}" class="btn btn-success btn-sm">Créer une boutique</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

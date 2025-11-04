@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block titre %}Djaapp - E-commerce Mobile-First pour l'Afrique{% endblock %}
+
+{% block contenu %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5" style="background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-secondaire) 100%); color: white;">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-lg-start">
+        <h1 class="display-4 fw-bold mb-4">Révolutionnez votre commerce en Afrique</h1>
+        <p class="lead mb-4">Djaapp transforme les petits commerçants en boutiques en ligne modernes. Vendez partout, payez facilement avec Mobile Money, gérez tout depuis votre mobile.</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-lg-start justify-content-center">
+          <a href="/commercant/inscription" class="btn btn-light btn-lg px-4">
+            <i class="fas fa-store me-2"></i>Devenir Commerçant
+          </a>
+          <a href="#decouvrir" class="btn btn-outline-light btn-lg px-4">
+            <i class="fas fa-search me-2"></i>Découvrir les Boutiques
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-5 mt-lg-0">
+        <img src="https://via.placeholder.com/400x400/FF7F00/FFFFFF?text=Djaapp+Illustration" alt="Djaapp Illustration" class="img-fluid" style="max-height: 400px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fonctionnalités Clés -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="h1 fw-bold">Pourquoi choisir Djaapp ?</h2>
+        <p class="lead text-muted">Une plateforme conçue pour l'Afrique, par des Africains</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-mobile-alt fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 card-title">100% Mobile-First</h3>
+            <p class="card-text text-muted">Optimisé pour les connexions lentes et les écrans mobiles africains. Vendez et achetez depuis votre téléphone.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-money-bill-wave fa-3x text-success"></i>
+            </div>
+            <h3 class="h5 card-title">Paiements Mobile Money</h3>
+            <p class="card-text text-muted">Intégration Orange Money, MTN MoMo. Paiements sécurisés et instantanés, sans carte bancaire.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fas fa-qrcode fa-3x text-warning"></i>
+            </div>
+            <h3 class="h5 card-title">QR Code Intelligent</h3>
+            <p class="card-text text-muted">Chaque boutique a son QR code. Scannez pour accéder instantanément aux produits.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comment ça marche -->
+<section class="py-5">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="h1 fw-bold">Comment ça marche ?</h2>
+        <p class="lead text-muted">Simple comme bonjour</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="text-center">
+          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">1</div>
+          <h4 class="h6">Inscrivez-vous</h4>
+          <p class="text-muted small">Créez votre compte commerçant en 2 minutes</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="text-center">
+          <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">2</div>
+          <h4 class="h6">Créez votre boutique</h4>
+          <p class="text-muted small">Ajoutez vos produits avec photos et descriptions</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="text-center">
+          <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">3</div>
+          <h4 class="h6">Partagez votre QR</h4>
+          <p class="text-muted small">Diffusez votre code QR dans votre quartier</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="text-center">
+          <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">4</div>
+          <h4 class="h6">Vendez & Gagnez</h4>
+          <p class="text-muted small">Recevez les commandes et paiements automatiquement</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistiques -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="h1 fw-bold">500+</div>
+        <div>Commerçants actifs</div>
+      </div>
+      <div class="col-md-3">
+        <div class="h1 fw-bold">10K+</div>
+        <div>Clients satisfaits</div>
+      </div>
+      <div class="col-md-3">
+        <div class="h1 fw-bold">50K+</div>
+        <div>Transactions réussies</div>
+      </div>
+      <div class="col-md-3">
+        <div class="h1 fw-bold">15</div>
+        <div>Pays couverts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Témoignages -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col-12">
+        <h2 class="h1 fw-bold">Ils nous font confiance</h2>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <div class="mb-3">
+              <i class="fas fa-quote-left fa-2x text-muted"></i>
+            </div>
+            <p class="card-text">"Djaapp a révolutionné mes ventes. Je vends maintenant dans tout Abidjan grâce au QR code !"</p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <img src="https://via.placeholder.com/50x50/228B22/FFFFFF?text=MK" alt="Marie K." class="rounded-circle" width="50" height="50">
+              </div>
+              <div>
+                <div class="fw-bold">Marie K.</div>
+                <div class="text-muted small">Commerçante, Abidjan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <div class="mb-3">
+              <i class="fas fa-quote-left fa-2x text-muted"></i>
+            </div>
+            <p class="card-text">"Acheter en ligne n'a jamais été aussi simple. Mobile Money + livraison rapide !"</p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <img src="https://via.placeholder.com/50x50/FFD700/FFFFFF?text=JPD" alt="Jean-Paul D." class="rounded-circle" width="50" height="50">
+              </div>
+              <div>
+                <div class="fw-bold">Jean-Paul D.</div>
+                <div class="text-muted small">Client régulier, Dakar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <div class="mb-3">
+              <i class="fas fa-quote-left fa-2x text-muted"></i>
+            </div>
+            <p class="card-text">"L'interface est intuitive, même pour quelqu'un qui n'est pas tech. Bravo !"</p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <img src="https://via.placeholder.com/50x50/FF7F00/FFFFFF?text=FS" alt="Fatou S." class="rounded-circle" width="50" height="50">
+              </div>
+              <div>
+                <div class="fw-bold">Fatou S.</div>
+                <div class="text-muted small">Commerçante, Bamako</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section class="py-5">
+  <div class="container text-center">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="h1 fw-bold mb-4">Prêt à digitaliser votre commerce ?</h2>
+        <p class="lead text-muted mb-4">Rejoignez des milliers de commerçants qui ont choisi Djaapp pour leur transformation digitale.</p>
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <a href="/commercant/inscription" class="btn btn-primaire btn-lg px-5">
+            <i class="fas fa-rocket me-2"></i>Commencer Gratuitement
+          </a>
+          <a href="#contact" class="btn btn-outline-secondary btn-lg px-5">
+            <i class="fas fa-phone me-2"></i>Nous contacter
+          </a>
+        </div>
+        <p class="text-muted mt-3 small">Inscription gratuite • Aucune commission sur les ventes • Support 24/7</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

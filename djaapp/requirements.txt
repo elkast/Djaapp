@@ -1,0 +1,13 @@
+Flask==2.3.3
+Flask-Session==0.4.0
+Flask-Compress==1.13
+mysql-connector-python==8.3.0
+bcrypt==4.1.2
+Flask-WTF==1.2.1
+qrcode[pil]==7.4.2
+Pillow==10.4.0
+numpy==1.26.4
+stripe==5.5.0
+twilio==8.13.0
+africastalking==1.2.4
+python-dotenv==1.0.1

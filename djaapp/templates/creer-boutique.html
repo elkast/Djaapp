@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block titre %}Créer ma boutique - Djaapp{% endblock %}
+{% block nav_boutique %} active{% endblock %}
+
+{% block contenu %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10">
+    <div class="row g-3 align-items-stretch">
+      <div class="col-12 col-md-6">
+        <div class="card ombre-douce border-0 h-100">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Créer ma boutique</h2>
+            {% if erreurs %}
+              <div class="alert alert-danger" role="alert">
+                <ul class="mb-0 ps-3">
+                  {% for err in erreurs %}
+                    <li>{{ err }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            <form method="post" action="/creer-boutique" class="row g-3" novalidate>
+              <div class="col-12">
+                <label class="form-label" for="champ-nom-boutique">Nom de la boutique</label>
+                <input id="champ-nom-boutique" name="nom_boutique" class="form-control" required minlength="2" placeholder="ex: Boutique Koffi" value="{{ valeurs.nom_boutique if valeurs else '' }}">
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="champ-description">Description</label>
+                <textarea id="champ-description" name="description" class="form-control" rows="4" placeholder="Décrivez brièvement votre activité...">{{ valeurs.description if valeurs else '' }}</textarea>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primaire w-100" type="submit">
+                  <i class="fas fa-plus me-1"></i>
+                  Créer la boutique
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card ombre-douce border-0 h-100">
+          <div class="card-body d-flex flex-column">
+            <h2 class="h5 mb-3">Partage et QR Code</h2>
+            {% if qr_path and lien_boutique %}
+              <p class="text-muted">Votre boutique a été créée. Scannez ou partagez ce QR pour accéder rapidement à votre page.</p>
+              <div class="text-center my-3">
+                <img src="{{ qr_path }}" alt="QR Code Boutique" class="img-fluid rounded border" style="max-width: 260px;">
+              </div>
+              <div class="mt-auto">
+                <div class="mb-2"><strong>Lien boutique:</strong></div>
+                <div class="input-group">
+                  <input type="text" class="form-control" value="{{ lien_boutique }}" readonly>
+                  <a class="btn btn-secondaire" href="{{ lien_boutique }}" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+              </div>
+            {% else %}
+              <p class="text-muted">Après la création, votre QR Code et le lien de la boutique s'afficheront ici.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

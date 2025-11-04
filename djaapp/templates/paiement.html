@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block titre %}Paiement - Djaapp{% endblock %}
+{% block nav_commandes %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-3">
+  <div class="col-12 col-lg-8">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h1 class="h5 mb-3">Paiement</h1>
+
+        <!-- Étapes (visuelles, sans JS) -->
+        <div class="d-flex gap-2 mb-3">
+          <span class="badge bg-{{ 'primary' if etape==1 else 'secondary' }}">1</span>
+          <span class="badge bg-{{ 'primary' if etape==2 else 'secondary' }}">2</span>
+          <span class="badge bg-{{ 'primary' if etape==3 else 'secondary' }}">3</span>
+        </div>
+
+        {% if etape == 1 %}
+          <h2 class="h6">Résumé commande</h2>
+          <ul class="list-group list-group-flush mb-3">
+            {% for it in items %}
+              <li class="list-group-item d-flex justify-content-between">
+                <div>{{ it.nom }} x {{ it.quantite }}</div>
+                <div>{{ '%.2f'|format(it.prix_unitaire * it.quantite) }} FCFA</div>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="d-flex justify-content-between align-items-center">
+            <a class="btn btn-outline-secondary" href="/panier">Retour panier</a>
+            <form method="post" action="/paiement/continuer">
+              <input type="hidden" name="etape_suivante" value="2">
+              <button class="btn btn-primaire" type="submit">Continuer</button>
+            </form>
+          </div>
+        {% elif etape == 2 %}
+          <h2 class="h6">Méthode de paiement</h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="border rounded p-3 h-100">
+                <h3 class="h6">Mobile Money</h3>
+                <form method="post" action="/paiement/mobile-money">
+                  <div class="mb-2">
+                    <label class="form-label" for="champ-tel">Numéro</label>
+                    <input id="champ-tel" class="form-control" name="telephone" placeholder="+2250700000000">
+                  </div>
+                  <button class="btn btn-primaire" type="submit">Payer</button>
+                </form>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="border rounded p-3 h-100">
+                <h3 class="h6">Carte (Stripe)</h3>
+                <form method="post" action="/paiement/carte">
+                  <div class="mb-2">
+                    <label class="form-label" for="champ-nom-carte">Nom</label>
+                    <input id="champ-nom-carte" class="form-control" name="nom">
+                  </div>
+                  <div class="mb-2">
+                    <label class="form-label" for="champ-num-carte">Numéro carte</label>
+                    <input id="champ-num-carte" class="form-control" name="numero">
+                  </div>
+                  <div class="row g-2">
+                    <div class="col">
+                      <label class="form-label" for="champ-exp">Expiration</label>
+                      <input id="champ-exp" class="form-control" name="expiration" placeholder="MM/AA">
+                    </div>
+                    <div class="col">
+                      <label class="form-label" for="champ-cvc">CVC</label>
+                      <input id="champ-cvc" class="form-control" name="cvc">
+                    </div>
+                  </div>
+                  <button class="btn btn-secondaire mt-3" type="submit">Payer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% elif etape == 3 %}
+          <h2 class="h6">Confirmation</h2>
+          <div class="alert alert-success">
+            Votre paiement a été reçu. Merci pour votre commande !
+          </div>
+          <a class="btn btn-primaire" href="/">Retour à l'accueil</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-4">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h2 class="h6">Total</h2>
+        <div class="display-6">{{ '%.2f'|format(total or 0) }} FCFA</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

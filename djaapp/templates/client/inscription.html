@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block titre %}Inscription Client - Djaapp{% endblock %}
+
+{% block contenu %}
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+    <div class="card ombre-douce border-0">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3 text-center">Créer un compte client</h1>
+        <p class="text-muted small mb-4 text-center">Rejoignez Djaapp pour acheter en ligne facilement. Mobile Money, livraison rapide.</p>
+
+        <form method="post" action="/client/inscription" class="row g-3" novalidate>
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="champ-nom">Nom complet *</label>
+            <input id="champ-nom" name="nom" class="form-control form-control-lg" required placeholder="Votre nom complet">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="champ-telephone">Téléphone *</label>
+            <input id="champ-telephone" name="telephone" type="tel" class="form-control form-control-lg" required placeholder="+2250700000000">
+            <div class="form-text">Astuce: commencez par +225 pour la Côte d'Ivoire.</div>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="champ-email">Email (optionnel)</label>
+            <input id="champ-email" name="email" type="email" class="form-control form-control-lg" placeholder="ex: vous@exemple.com">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="champ-adresse">Adresse (optionnel)</label>
+            <input id="champ-adresse" name="adresse" class="form-control form-control-lg" placeholder="Votre adresse de livraison">
+          </div>
+
+          <div class="col-12">
+            <label class="form-label fw-semibold" for="champ-mot_de_passe">Mot de passe (optionnel)</label>
+            <input id="champ-mot_de_passe" name="mot_de_passe" type="password" class="form-control form-control-lg" placeholder="Pour compte persistant">
+            <div class="form-text">Laissez vide pour connexion par téléphone uniquement.</div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-primaire w-100 btn-lg fw-semibold" type="submit">
+              <i class="fas fa-user-plus me-2"></i>
+              S'inscrire
+            </button>
+          </div>
+        </form>
+
+        <div class="text-center mt-4">
+          <p class="small mb-0">Déjà un compte ? <a href="/client/connexion" class="texte-accent text-decoration-none fw-semibold">Se connecter</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block titre %}Dashboard - Djaapp{% endblock %}
+{% block nav_dashboard %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <!-- Statistiques -->
+  <div class="col-12">
+    <h2 class="h5 fw-semibold mb-3">Statistiques</h2>
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div class="card ombre-douce border-0 text-center">
+          <div class="card-body">
+            <i class="fas fa-euro-sign fa-2x text-primaire mb-2"></i>
+            <div class="h5 fw-semibold text-primaire">{{ stats.ventes_jour or 0 }} FCFA</div>
+            <div class="small text-muted">Ventes (jour)</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card ombre-douce border-0 text-center">
+          <div class="card-body">
+            <i class="fas fa-chart-line fa-2x text-secondaire mb-2"></i>
+            <div class="h5 fw-semibold text-secondaire">{{ stats.ventes_semaine or 0 }} FCFA</div>
+            <div class="small text-muted">Ventes (semaine)</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card ombre-douce border-0 text-center">
+          <div class="card-body">
+            <i class="fas fa-shopping-cart fa-2x text-accent mb-2"></i>
+            <div class="h5 fw-semibold text-accent">{{ stats.nb_commandes or 0 }}</div>
+            <div class="small text-muted">Commandes</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card ombre-douce border-0 text-center">
+          <div class="card-body">
+            <i class="fas fa-box fa-2x text-muted mb-2"></i>
+            <div class="h5 fw-semibold">{{ stats.nb_produits or 0 }}</div>
+            <div class="small text-muted">Produits</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions rapides -->
+  <div class="col-12">
+    <h5 class="fw-semibold mb-3">Actions rapides</h5>
+    <div class="d-grid d-sm-flex gap-2">
+      <a class="btn btn-primaire" href="/commercant/boutique/creer">
+        <i class="fas fa-store me-2"></i>Créer boutique
+      </a>
+      <a class="btn btn-secondaire" href="/commercant/produits">
+        <i class="fas fa-plus me-2"></i>Ajouter produit
+      </a>
+      <a class="btn btn-outline-secondary" href="/commercant/commandes">
+        <i class="fas fa-box me-2"></i>Gérer commandes
+      </a>
+      <a class="btn btn-outline-info" href="/commercant/partage/1">
+        <i class="fas fa-share me-2"></i>Partager boutique
+      </a>
+    </div>
+  </div>
+
+  <!-- Produits récents -->
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-semibold mb-0">Produits récents</h5>
+      <a class="btn btn-sm btn-outline-primary" href="/commercant/produits">
+        <i class="fas fa-eye me-1"></i>Voir tout
+      </a>
+    </div>
+    {% if produits %}
+    <div class="row g-3">
+      {% for produit in produits %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 ombre-douce border-0">
+          {% if produit.image %}
+          <img src="{{ url_for('static', filename=produit.image) }}" class="card-img-top" alt="{{ produit.nom }}" style="height: 120px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h6 class="card-title fw-semibold mb-2">{{ produit.nom }}</h6>
+            <p class="card-text small text-muted mb-2">{{ produit.description or 'Aucune description' }}</p>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold text-primaire">{{ produit.prix }} FCFA</span>
+              <span class="badge bg-{{ 'success' if produit.stock > 10 else 'warning' if produit.stock > 0 else 'danger' }}">
+                {{ produit.stock }}
+              </span>
+            </div>
+            <p class="card-text small text-muted mb-0">
+              <i class="fas fa-store me-1"></i>{{ produit.nom_boutique }}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center py-4">
+        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+        <h6 class="text-muted fw-semibold">Aucun produit</h6>
+        <p class="text-muted small">Commencez par ajouter vos premiers produits.</p>
+        <a href="/commercant/produits" class="btn btn-primaire btn-sm">
+          <i class="fas fa-plus me-1"></i>Ajouter un produit
+        </a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

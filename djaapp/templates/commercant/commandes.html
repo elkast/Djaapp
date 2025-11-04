@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block titre %}Mes Commandes - Djaapp{% endblock %}
+{% block nav_commandes %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 mb-0 fw-semibold">Commandes reçues</h1>
+      <div class="d-flex gap-2">
+        <select class="form-select form-select-sm" style="width: auto;">
+          <option>Toutes</option>
+          <option>En attente</option>
+          <option>Payées</option>
+          <option>Livrées</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  {% if commandes %}
+  <div class="col-12">
+    <div class="row g-3">
+      {% for commande in commandes %}
+      <div class="col-12">
+        <div class="card ombre-douce border-0">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-7">
+                <h6 class="card-title fw-semibold mb-1">
+                  Commande{{ commande.id }}
+                  <span class="badge bg-{{ 'secondary' if commande.statut == 'en_attente' else 'warning' if commande.statut == 'paye' else 'success' }} ms-2">
+                    {{ commande.statut|title }}
+                  </span>
+                </h6>
+                <p class="card-text small text-muted mb-1">
+                  <i class="fas fa-user me-1"></i>{{ commande.nom_client }} - {{ commande.telephone_client }}
+                </p>
+                <p class="card-text small text-muted mb-0">
+                  <i class="fas fa-calendar me-1"></i>{{ commande.date_commande.strftime('%d/%m/%Y %H:%M') }}
+                  <span class="ms-3">
+                    <i class="fas fa-credit-card me-1"></i>{{ commande.methode_paiement|title }}
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-5 text-md-end">
+                <div class="mb-2">
+                  <strong class="text-primaire">{{ commande.total }} FCFA</strong>
+                </div>
+                <div class="d-flex gap-2 justify-content-md-end">
+                  <button class="btn btn-sm btn-outline-info" onclick="voirDetails({{ commande.id }})">
+                    <i class="fas fa-eye me-1"></i>Détails
+                  </button>
+                  {% if commande.statut == 'paye' %}
+                  <form method="post" action="/commercant/commande/{{ commande.id }}/traiter" class="d-inline">
+                    <input type="hidden" name="action" value="livrer">
+                    <button type="submit" class="btn btn-sm btn-success">
+                      <i class="fas fa-check me-1"></i>Marquer livrée
+                    </button>
+                  </form>
+                  {% elif commande.statut == 'en_attente' %}
+                  <span class="text-muted small">En attente de paiement</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="col-12">
+    <div class="card ombre-douce border-0">
+      <div class="card-body text-center py-5">
+        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+        <h5 class="text-muted fw-semibold">Aucune commande</h5>
+        <p class="text-muted">Vous n'avez pas encore reçu de commandes.</p>
+        <a href="/commercant/produits" class="btn btn-primaire">
+          <i class="fas fa-plus me-2"></i>Ajouter des produits
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Modal Détails Commande -->
+<div class="modal fade" id="modalDetailsCommande" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-semibold">Détails de la commande</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="detailsCommandeContent">
+        <!-- Contenu chargé dynamiquement -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function voirDetails(idCommande) {
+  // Placeholder pour chargement AJAX des détails
+  alert('Fonctionnalité détails à implémenter');
+}
+</script>
+{% endblock %}

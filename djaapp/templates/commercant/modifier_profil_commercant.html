@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block titre %}Modifier Profil - Commerçant{% endblock %}
+{% block nav_profil %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-4">
+  <!-- Modifier Profil Commerçant -->
+  <div class="col-lg-8">
+    <div class="card ombre-douce">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fas fa-edit"></i> Modifier Mon Profil</h5>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          <div class="row g-3">
+            <!-- Photo de profil -->
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                {% if commercant.image %}
+                <img id="preview-image" src="{{ url_for('static', filename=commercant.image) }}" class="rounded-circle mb-3" alt="Photo de profil" style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                <div id="preview-placeholder" class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+                  <i class="fas fa-user fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <label for="image_commercant" class="form-label small text-muted">Photo de profil</label>
+                <input type="file" class="form-control form-control-sm" id="image_commercant" name="image_commercant" accept="image/*">
+              </div>
+            </div>
+
+            <!-- Informations -->
+            <div class="col-md-8">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="nom" class="form-label">Nom *</label>
+                  <input type="text" class="form-control" id="nom" name="nom" value="{{ commercant.nom or '' }}" required>
+                </div>
+                <div class="col-sm-6">
+                  <label for="email" class="form-label">Email *</label>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ commercant.email or '' }}" required readonly>
+                  <div class="form-text">L'email ne peut pas être modifié</div>
+                </div>
+                <div class="col-sm-6">
+                  <label for="telephone" class="form-label">Téléphone</label>
+                  <input type="tel" class="form-control" id="telephone" name="telephone" value="{{ commercant.telephone or '' }}">
+                </div>
+                <div class="col-sm-6">
+                  <label for="adresse" class="form-label">Adresse</label>
+                  <input type="text" class="form-control" id="adresse" name="adresse" value="{{ commercant.adresse or '' }}">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Géolocalisation -->
+          <div class="row g-3 mt-2">
+            <div class="col-12">
+              <h6 class="text-muted mb-2"><i class="fas fa-map-marker-alt"></i> Position Géographique</h6>
+              <button type="button" class="btn btn-outline-primary btn-sm" id="get-location">
+                <i class="fas fa-crosshairs"></i> Obtenir ma position actuelle
+              </button>
+              <div class="row g-2 mt-2">
+                <div class="col-sm-6">
+                  <label for="latitude" class="form-label small">Latitude</label>
+                  <input type="text" class="form-control form-control-sm" id="latitude" name="latitude" value="{{ commercant.latitude or '' }}" readonly>
+                </div>
+                <div class="col-sm-6">
+                  <label for="longitude" class="form-label small">Longitude</label>
+                  <input type="text" class="form-control form-control-sm" id="longitude" name="longitude" value="{{ commercant.longitude or '' }}" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primaire">
+              <i class="fas fa-save"></i> Enregistrer les modifications
+            </button>
+            <a href="{{ url_for('profil_commercant') }}" class="btn btn-secondary">
+              <i class="fas fa-arrow-left"></i> Annuler
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modifier Boutique -->
+  <div class="col-lg-4">
+    <div class="card ombre-douce">
+      <div class="card-header bg-success text-white">
+        <h6 class="mb-0"><i class="fas fa-store"></i> Ma Boutique</h6>
+      </div>
+      <div class="card-body">
+        {% if boutiques %}
+        {% set boutique = boutiques[0] %}
+        <div class="text-center mb-3">
+          {% if boutique.image %}
+          <img id="preview-boutique" src="{{ url_for('static', filename=boutique.image) }}" class="rounded mb-3" alt="{{ boutique.nom_boutique }}" style="width: 80px; height: 80px; object-fit: cover;">
+          {% else %}
+          <div id="preview-boutique-placeholder" class="bg-light rounded d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+            <i class="fas fa-store fa-2x text-muted"></i>
+          </div>
+          {% endif %}
+          <h6 class="fw-semibold">{{ boutique.nom_boutique }}</h6>
+          <p class="text-muted small">{{ boutique.description or 'Aucune description' }}</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="image_boutique" class="form-label small">Logo de la boutique</label>
+            <input type="file" class="form-control form-control-sm" id="image_boutique" name="image_boutique" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-success btn-sm w-100">
+            <i class="fas fa-save"></i> Mettre à jour
+          </button>
+        </form>
+        {% else %}
+        <div class="text-center py-3">
+          <i class="fas fa-store fa-2x text-muted mb-2"></i>
+          <p class="text-muted small">Aucune boutique créée</p>
+          <a href="{{ url_for('creer_boutique_page') }}" class="btn btn-success btn-sm">Créer une boutique</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Géolocalisation
+document.getElementById('get-location').addEventListener('click', function() {
+  if (navigator.geolocation) {
+    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Localisation...';
+    this.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      document.getElementById('latitude').value = position.coords.latitude;
+      document.getElementById('longitude').value = position.coords.longitude;
+
+      document.getElementById('get-location').innerHTML = '<i class="fas fa-check"></i> Position obtenue';
+      document.getElementById('get-location').classList.remove('btn-outline-primary');
+      document.getElementById('get-location').classList.add('btn-success');
+    }, function(error) {
+      alert('Erreur de géolocalisation: ' + error.message);
+      document.getElementById('get-location').innerHTML = '<i class="fas fa-crosshairs"></i> Obtenir ma position actuelle';
+      document.getElementById('get-location').disabled = false;
+    });
+  } else {
+    alert('La géolocalisation n\'est pas supportée par ce navigateur.');
+  }
+});
+
+// Prévisualisation des images
+document.getElementById('image_commercant').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('preview-image') || document.getElementById('preview-placeholder');
+      if (preview.tagName === 'DIV') {
+        preview.outerHTML = '<img id="preview-image" src="' + e.target.result + '" class="rounded-circle mb-3" alt="Photo de profil" style="width: 120px; height: 120px; object-fit: cover;">';
+      } else {
+        preview.src = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+document.getElementById('image_boutique').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('preview-boutique') || document.getElementById('preview-boutique-placeholder');
+      if (preview.tagName === 'DIV') {
+        preview.outerHTML = '<img id="preview-boutique" src="' + e.target.result + '" class="rounded mb-3" alt="Logo boutique" style="width: 80px; height: 80px; object-fit: cover;">';
+      } else {
+        preview.src = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Validation côté client
+document.querySelector('form').addEventListener('submit', function(e) {
+  const email = document.getElementById('email').value;
+  const tel = document.getElementById('telephone').value;
+
+  if (!email.includes('@')) {
+    alert('Email invalide');
+    e.preventDefault();
+    return;
+  }
+
+  if (tel && !tel.startsWith('+225')) {
+    alert('Téléphone doit commencer par +225');
+    e.preventDefault();
+    return;
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block titre %}Mon profil - Djaapp{% endblock %}
+{% block nav_profil %} active{% endblock %}
+
+{% block contenu %}
+<div class="row g-3">
+  <div class="col-12 col-lg-6">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h1 class="h5 mb-3">Mes informations</h1>
+        {% if erreurs %}
+          <div class="alert alert-danger"><ul class="mb-0 ps-3">{% for e in erreurs %}<li>{{ e }}</li>{% endfor %}</ul></div>
+        {% endif %}
+        <form method="post" action="/profil-client" class="row g-3" novalidate>
+          <div class="col-12">
+            <label class="form-label" for="champ-nom">Nom</label>
+            <input id="champ-nom" name="nom" class="form-control" required value="{{ client.nom if client else '' }}">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="champ-email">Email</label>
+            <input id="champ-email" name="email" type="email" class="form-control" value="{{ client.email if client else '' }}">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="champ-telephone">Téléphone</label>
+            <input id="champ-telephone" name="telephone" class="form-control" value="{{ client.telephone if client else '' }}">
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="champ-adresse">Adresse</label>
+            <input id="champ-adresse" name="adresse" class="form-control" value="{{ client.adresse if client else '' }}">
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primaire" type="submit">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card ombre-douce border-0">
+      <div class="card-body">
+        <h2 class="h6">Mes commandes</h2>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Total</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if commandes and commandes|length %}
+                {% for c in commandes %}
+                <tr>
+                  <td>{{ c.id }}</td>
+                  <td>{{ c.date_commande }}</td>
+                  <td>{{ c.statut }}</td>
+                  <td>{{ '%.2f'|format(c.total) }} FCFA</td>
+                  <td class="text-end"><a class="btn btn-sm btn-outline-secondary" href="/commande?id={{ c.id }}">Détail</a></td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr><td colspan="5" class="text-center text-muted">Aucune commande.</td></tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

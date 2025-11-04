@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block titre %}Créer ma boutique - Djaapp{% endblock %}
+
+{% block contenu %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-12 col-md-6">
+        <div class="card ombre-douce border-0 h-100">
+          <div class="card-body p-4">
+            <h2 class="h5 mb-4 fw-semibold text-center">Créer ma boutique</h2>
+
+            <form method="post" action="/commercant/boutique/creer" class="row g-3" novalidate>
+              <div class="col-12">
+                <label class="form-label fw-semibold" for="champ-nom-boutique">Nom de la boutique *</label>
+                <input id="champ-nom-boutique" name="nom_boutique" class="form-control form-control-lg" required minlength="2" placeholder="ex: Boutique Koffi">
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold" for="champ-description">Description</label>
+                <textarea id="champ-description" name="description" class="form-control form-control-lg" rows="4" placeholder="Décrivez brièvement votre activité..."></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold" for="champ-categorie">Catégorie</label>
+                <select id="champ-categorie" name="categorie" class="form-select form-select-lg">
+                  <option value="">Choisir une catégorie</option>
+                  <option value="Alimentation">Alimentation</option>
+                  <option value="Électronique">Électronique</option>
+                  <option value="Mode">Mode & Vêtements</option>
+                  <option value="Maison">Maison & Jardin</option>
+                  <option value="Santé">Santé & Beauté</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primaire w-100 btn-lg fw-semibold" type="submit">
+                  <i class="fas fa-store me-2"></i>Créer la boutique
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card ombre-douce border-0 h-100">
+          <div class="card-body p-4 d-flex flex-column">
+            <h2 class="h5 mb-4 fw-semibold text-center">Partage et QR Code</h2>
+            {% if qr_path and lien_boutique %}
+              <p class="text-muted small text-center">Votre boutique a été créée. Scannez ou partagez ce QR pour accéder rapidement à votre page.</p>
+              <div class="text-center my-4">
+                <img src="{{ url_for('static', filename=qr_path) }}" alt="QR Code Boutique" class="img-fluid rounded border shadow-sm" style="max-width: 260px;">
+              </div>
+              <div class="mt-auto">
+                <div class="mb-3"><strong class="fw-semibold">Lien boutique:</strong></div>
+                <div class="input-group">
+                  <input type="text" class="form-control" value="{{ lien_boutique }}" readonly>
+                  <button class="btn btn-secondaire" onclick="copierLien()">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                  <a class="btn btn-outline-primary" href="{{ lien_boutique }}" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                </div>
+                <div class="mt-3 d-flex gap-2">
+                  <button class="btn btn-outline-success btn-sm" onclick="partagerWhatsApp()">
+                    <i class="fab fa-whatsapp me-1"></i>WhatsApp
+                  </button>
+                  <button class="btn btn-outline-info btn-sm" onclick="partagerSMS()">
+                    <i class="fas fa-sms me-1"></i>SMS
+                  </button>
+                </div>
+              </div>
+            {% else %}
+              <div class="text-center my-auto">
+                <i class="fas fa-qrcode fa-4x text-muted mb-3"></i>
+                <p class="text-muted">Après la création, votre QR Code et le lien de la boutique s'afficheront ici.</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copierLien() {
+  navigator.clipboard.writeText('{{ lien_boutique }}').then(() => {
+    alert('Lien copié !');
+  });
+}
+
+function partagerWhatsApp() {
+  const url = 'https://wa.me/?text=' + encodeURIComponent('Découvrez ma boutique sur Djaapp: {{ lien_boutique }}');
+  window.open(url, '_blank');
+}
+
+function partagerSMS() {
+  const url = 'sms:?body=' + encodeURIComponent('Découvrez ma boutique sur Djaapp: {{ lien_boutique }}');
+  window.open(url, '_blank');
+}
+</script>
+{% endblock %}
