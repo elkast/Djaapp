@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djaapp - Status</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4F46E5;
+            --primary-purple: #9333EA;
+            --accent-pink: #EC4899;
+            --orange-icon: #F97316;
+            --yellow-icon: #EAB308;
+            --green-check: #10B981;
+            --red-error: #EF4444;
+            --background-light: #F8FAFC;
+            --text-dark: #0F172A;
+            --text-gray: #64748B;
+            --footer-dark: #0F172A;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-light {
+            background: var(--background-light);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #DBEAFE, #F3E8FF);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+        }
+
+        /* Status Overview */
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-indicator {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .status-operational {
+            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+            color: var(--green-check);
+        }
+
+        .status-degraded {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            color: var(--yellow-icon);
+        }
+
+        .status-outage {
+            background: linear-gradient(135deg, #FEE2E2, #FECACA);
+            color: var(--red-error);
+        }
+
+        .status-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card p {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+
+        /* Incident History */
+        .incidents-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .incidents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .incidents-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .incidents-filter {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #E2E8F0;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .incident-item {
+            border-bottom: 1px solid #E2E8F0;
+            padding: 1.5rem 0;
+        }
+
+        .incident-item:last-child {
+            border-bottom: none;
+        }
+
+        .incident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .incident-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .incident-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-resolved {
+            background: #D1FAE5;
+            color: var(--green-check);
+        }
+
+        .status-investigating {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .incident-time {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+
+        .incident-description {
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .incident-updates {
+            margin-left: 1rem;
+            border-left: 2px solid #E2E8F0;
+            padding-left: 1rem;
+        }
+
+        .update-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .update-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .update-time {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Maintenance Schedule */
+        .maintenance-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .maintenance-header {
+            margin-bottom: 2rem;
+        }
+
+        .maintenance-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .maintenance-subtitle {
+            color: var(--text-gray);
+        }
+
+        .maintenance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .maintenance-item:last-child {
+            border-bottom: none;
+        }
+
+        .maintenance-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .maintenance-info p {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+        }
+
+        .maintenance-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .maintenance-scheduled {
+            background: #EEF2FF;
+            color: var(--primary-blue);
+        }
+
+        .maintenance-completed {
+            background: #D1FAE5;
+            color: var(--green-check);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #94A3B8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .status-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .status-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .incidents-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .maintenance-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+                Djaapp
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="index.html#probleme" class="nav-link">Probleme</a></li>
+                <li><a href="index.html#solution" class="nav-link">Solution</a></li>
+                <li><a href="index.html#fonctionnalites" class="nav-link">Fonctionnalites</a></li>
+                <li><a href="index.html#equipe" class="nav-link">Equipe</a></li>
+                <li><a href="join.html" class="btn-join">Nous Rejoindre</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Status Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Status Système</div>
+                <h2 class="section-title">État des Services Djaapp</h2>
+                <p class="section-subtitle">Surveillance en temps réel de nos services et historique des incidents.</p>
+            </div>
+
+            <!-- Status Overview -->
+            <div class="status-overview">
+                <div class="status-card">
+                    <div class="status-indicator status-operational">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Application Mobile</h3>
+                    <p>Opérationnel</p>
+                </div>
+                <div class="status-card">
+                    <div class="status-indicator status-operational">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>API Paiements</h3>
+                    <p>Opérationnel</p>
+                </div>
+                <div class="status-card">
+                    <div class="status-indicator status-operational">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Dashboard Web</h3>
+                    <p>Opérationnel</p>
+                </div>
+                <div class="status-card">
+                    <div class="status-indicator status-operational">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Base de Données</h3>
+                    <p>Opérationnel</p>
+                </div>
+            </div>
+
+            <!-- Incident History -->
+            <div class="incidents-container">
+                <div class="incidents-header">
+                    <h3 class="incidents-title">Historique des Incidents</h3>
+                    <div class="incidents-filter">
+                        <button class="filter-btn active" data-filter="all">Tous</button>
+                        <button class="filter-btn" data-filter="resolved">Résolus</button>
+                        <button class="filter-btn" data-filter="investigating">En cours</button>
+                    </div>
+                </div>
+
+                <div class="incident-item" data-status="resolved">
+                    <div class="incident-header">
+                        <div>
+                            <h4 class="incident-title">Lenteur temporaire de l'application</h4>
+                            <div class="incident-status status-resolved">Résolu</div>
+                        </div>
+                        <div class="incident-time">Résolu il y a 2 jours</div>
+                    </div>
+                    <p class="incident-description">Certains utilisateurs ont signalé des lenteurs lors de l'accès à leur dashboard. Le problème a été résolu après optimisation des requêtes de base de données.</p>
+                    <div class="incident-updates">
+                        <div class="update-item">
+                            <div class="update-time">Il y a 2 jours à 14:30</div>
+                            <p>Nous avons identifié le problème et travaillons sur une solution.</p>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-time">Il y a 2 jours à 16:45</div>
+                            <p>Le problème a été résolu. Les performances sont revenues à la normale.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="incident-item" data-status="resolved">
+                    <div class="incident-header">
+                        <div>
+                            <h4 class="incident-title">Maintenance programmée - Mise à jour sécurité</h4>
+                            <div class="incident-status status-resolved">Résolu</div>
+                        </div>
+                        <div class="incident-time">Résolu il y a 1 semaine</div>
+                    </div>
+                    <p class="incident-description">Maintenance programmée pour mettre à jour nos systèmes de sécurité. L'application était indisponible pendant 2 heures.</p>
+                </div>
+
+                <div class="incident-item" data-status="resolved">
+                    <div class="incident-header">
+                        <div>
+                            <h4 class="incident-title">Problème de synchronisation des paiements</h4>
+                            <div class="incident-status status-resolved">Résolu</div>
+                        </div>
+                        <div class="incident-time">Résolu il y a 2 semaines</div>
+                    </div>
+                    <p class="incident-description">Un problème temporaire avec notre partenaire de paiement Orange Money a causé des retards dans la confirmation des transactions.</p>
+                    <div class="incident-updates">
+                        <div class="update-item">
+                            <div class="update-time">Il y a 2 semaines à 10:15</div>
+                            <p>Nous détectons un problème avec la synchronisation des paiements Orange Money.</p>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-time">Il y a 2 semaines à 11:30</div>
+                            <p>Coordination avec Orange Money pour résoudre le problème.</p>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-time">Il y a 2 semaines à 14:20</div>
+                            <p>Le problème est résolu. Toutes les transactions sont maintenant synchronisées.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintenance Schedule -->
+            <div class="maintenance-container">
+                <div class="maintenance-header">
+                    <h3 class="maintenance-title">Maintenances Programmées</h3>
+                    <p class="maintenance-subtitle">Nous planifions nos maintenances pour minimiser l'impact sur vos activités.</p>
+                </div>
+
+                <div class="maintenance-item">
+                    <div class="maintenance-info">
+                        <h4>Mise à jour des fonctionnalités de reporting</h4>
+                        <p>Amélioration des tableaux de bord analytics avec de nouvelles métriques.</p>
+                    </div>
+                    <div class="maintenance-status maintenance-completed">Terminée</div>
+                </div>
+
+                <div class="maintenance-item">
+                    <div class="maintenance-info">
+                        <h4>Optimisation des performances mobiles</h4>
+                        <p>Réduction du temps de chargement de l'application sur les connexions lentes.</p>
+                    </div>
+                    <div class="maintenance-status maintenance-scheduled">Prévue le 15 Jan</div>
+                </div>
+
+                <div class="maintenance-item">
+                    <div class="maintenance-info">
+                        <h4>Extension API partenaires</h4>
+                        <p>Ajout de nouveaux endpoints pour les intégrations tierces.</p>
+                    </div>
+                    <div class="maintenance-status maintenance-scheduled">Prévue le 22 Jan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Djaapp</h3>
+                <p>Transformez votre commerce en Afrique avec notre plateforme mobile-first.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Produit</h4>
+                <ul class="footer-links">
+                    <li><a href="product.html">Fonctionnalités</a></li>
+                    <li><a href="pricing.html">Tarification</a></li>
+                    <li><a href="security.html">Sécurité</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="status.html">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Légal</h4>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Confidentialité</a></li>
+                    <li><a href="terms.html">Conditions</a></li>
+                    <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Djaapp. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Filter incidents
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+                
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter incidents
+                document.querySelectorAll('.incident-item').forEach(item => {
+                    if (filter === 'all' || item.dataset.status === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

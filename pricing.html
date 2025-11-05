@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djaapp - Tarification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4F46E5;
+            --primary-purple: #9333EA;
+            --accent-pink: #EC4899;
+            --orange-icon: #F97316;
+            --yellow-icon: #EAB308;
+            --green-check: #10B981;
+            --background-light: #F8FAFC;
+            --text-dark: #0F172A;
+            --text-gray: #64748B;
+            --footer-dark: #0F172A;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-light {
+            background: var(--background-light);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #DBEAFE, #F3E8FF);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular::before {
+            content: 'Plus Populaire';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-period {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            color: var(--text-gray);
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+            color: var(--green-check);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-pricing {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-pricing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .pricing-card.free .btn-pricing {
+            background: var(--text-gray);
+        }
+
+        .pricing-card.free .btn-pricing:hover {
+            box-shadow: 0 10px 30px rgba(100, 116, 139, 0.3);
+        }
+
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.5rem;
+            text-align: left;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--background-light);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-gray);
+            display: none;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            transition: transform 0.3s;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #94A3B8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+                Djaapp
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="index.html#probleme" class="nav-link">Probleme</a></li>
+                <li><a href="index.html#solution" class="nav-link">Solution</a></li>
+                <li><a href="index.html#fonctionnalites" class="nav-link">Fonctionnalites</a></li>
+                <li><a href="index.html#equipe" class="nav-link">Equipe</a></li>
+                <li><a href="join.html" class="btn-join">Nous Rejoindre</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Pricing Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Tarification Simple</div>
+                <h2 class="section-title">Choisissez Votre Plan</h2>
+                <p class="section-subtitle">Commencez gratuitement et évoluez selon vos besoins. Tous les plans incluent nos fonctionnalités de base.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-name">Gratuit</h3>
+                    <div class="pricing-price">0€</div>
+                    <div class="pricing-period">par mois</div>
+                    <ul class="pricing-features">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Jusqu'à 10 produits</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Paiements Mobile Money</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Support communautaire</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Analytics de base</span>
+                        </li>
+                    </ul>
+                    <button class="btn-pricing">Commencer Gratuitement</button>
+                </div>
+                <div class="pricing-card popular">
+                    <h3 class="pricing-name">Essentiel</h3>
+                    <div class="pricing-price">9€</div>
+                    <div class="pricing-period">par mois</div>
+                    <ul class="pricing-features">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Produits illimités</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Tous les paiements locaux</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Support prioritaire</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Analytics avancés</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Gestion des clients</span>
+                        </li>
+                    </ul>
+                    <button class="btn-pricing">Commencer l'Essai</button>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="pricing-name">Premium</h3>
+                    <div class="pricing-price">29€</div>
+                    <div class="pricing-period">par mois</div>
+                    <ul class="pricing-features">
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Tout du plan Essentiel</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>API personnalisée</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Intégrations avancées</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Support dédié 24/7</span>
+                        </li>
+                        <li>
+                            <div class="check-icon">✓</div>
+                            <span>Formation personnalisée</span>
+                        </li>
+                    </ul>
+                    <button class="btn-pricing">Nous Contacter</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Questions Fréquentes</div>
+                <h2 class="section-title">Vous avez des questions ?</h2>
+                <p class="section-subtitle">Trouvez rapidement les réponses à vos questions les plus courantes.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Puis-je changer de plan à tout moment ?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Oui, vous pouvez passer d'un plan à l'autre à tout moment. Les changements prennent effet immédiatement et sont facturés au prorata.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Y a-t-il des frais cachés ?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Non, nos prix sont transparents. Seuls les frais de transaction des opérateurs de paiement s'appliquent (généralement 1-2%).
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Puis-je annuler mon abonnement ?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Oui, vous pouvez annuler votre abonnement à tout moment depuis votre tableau de bord. Vous gardez accès jusqu'à la fin de la période payée.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Supportez-vous plusieurs devises ?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Oui, nous supportons le Franc CFA, l'Euro, le Dollar US et d'autres devises africaines selon les pays.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Djaapp</h3>
+                <p>Transformez votre commerce en Afrique avec notre plateforme mobile-first.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Produit</h4>
+                <ul class="footer-links">
+                    <li><a href="product.html">Fonctionnalités</a></li>
+                    <li><a href="pricing.html">Tarification</a></li>
+                    <li><a href="security.html">Sécurité</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="status.html">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Légal</h4>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Confidentialité</a></li>
+                    <li><a href="terms.html">Conditions</a></li>
+                    <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Djaapp. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq-toggle');
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '−';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

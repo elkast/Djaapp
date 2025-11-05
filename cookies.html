@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djaapp - Politique des Cookies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4F46E5;
+            --primary-purple: #9333EA;
+            --accent-pink: #EC4899;
+            --orange-icon: #F97316;
+            --yellow-icon: #EAB308;
+            --green-check: #10B981;
+            --background-light: #F8FAFC;
+            --text-dark: #0F172A;
+            --text-gray: #64748B;
+            --footer-dark: #0F172A;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-light {
+            background: var(--background-light);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #DBEAFE, #F3E8FF);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+        }
+
+        /* Cookies Content */
+        .cookies-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cookies-intro {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .cookies-intro p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .cookies-section {
+            margin-bottom: 3rem;
+        }
+
+        .cookies-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .cookies-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .cookies-section p {
+            margin-bottom: 1rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .cookies-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cookies-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--background-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .cookie-table th {
+            background: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .cookie-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .cookie-category {
+            background: linear-gradient(135deg, #EEF2FF, #F3E8FF);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .cookie-category h4 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cookie-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .cookie-toggle:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #E2E8F0;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary-blue);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info h3 {
+            color: var(--accent-pink);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #94A3B8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cookies-content {
+                padding: 2rem;
+            }
+
+            .cookie-table {
+                font-size: 0.875rem;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+                Djaapp
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="index.html#probleme" class="nav-link">Probleme</a></li>
+                <li><a href="index.html#solution" class="nav-link">Solution</a></li>
+                <li><a href="index.html#fonctionnalites" class="nav-link">Fonctionnalites</a></li>
+                <li><a href="index.html#equipe" class="nav-link">Equipe</a></li>
+                <li><a href="join.html" class="btn-join">Nous Rejoindre</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Cookies Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Légal</div>
+                <h2 class="section-title">Politique des Cookies</h2>
+                <p class="section-subtitle">Comment nous utilisons les cookies et technologies similaires</p>
+            </div>
+
+            <div class="cookies-content">
+                <div class="cookies-intro">
+                    <p>Cette politique explique comment Djaapp utilise les cookies et autres technologies similaires pour améliorer votre expérience sur notre plateforme. Les cookies nous aident à fournir un service personnalisé et à analyser l'utilisation de notre site.</p>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>1. Qu'est-ce qu'un cookie ?</h2>
+                    <p>Un cookie est un petit fichier texte stocké sur votre appareil lorsque vous visitez un site web. Il contient des informations qui peuvent être lues par le site web lors de vos visites suivantes. Les cookies nous permettent de mémoriser vos préférences et d'améliorer votre expérience utilisateur.</p>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>2. Types de cookies utilisés</h2>
+
+                    <div class="cookie-category">
+                        <h4>🍪 Cookies Essentiels</h4>
+                        <p>Nécessaires au fonctionnement de base du site. Ils permettent la navigation, l'authentification et la sécurité.</p>
+                        <div class="cookie-toggle">
+                            <span>Cookies de session</span>
+                            <div class="toggle-switch active">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cookie-category">
+                        <h4>📊 Cookies Analytiques</h4>
+                        <p>Aident à comprendre comment les utilisateurs interagissent avec notre site pour l'améliorer.</p>
+                        <div class="cookie-toggle">
+                            <span>Google Analytics</span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cookie-category">
+                        <h4>🎯 Cookies Fonctionnels</h4>
+                        <p>Mémorisent vos préférences et paramètres pour une expérience personnalisée.</p>
+                        <div class="cookie-toggle">
+                            <span>Préférences de langue</span>
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>3. Cookies tiers</h2>
+                    <p>Nous utilisons des services tiers qui peuvent déposer leurs propres cookies :</p>
+
+                    <table class="cookie-table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Finalité</th>
+                                <th>Durée</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Google Analytics</td>
+                                <td>Analyse du trafic</td>
+                                <td>2 ans</td>
+                            </tr>
+                            <tr>
+                                <td>Stripe</td>
+                                <td>Traitement des paiements</td>
+                                <td>Session</td>
+                            </tr>
+                            <tr>
+                                <td>Cloudflare</td>
+                                <td>Sécurité et performance</td>
+                                <td>30 jours</td>
+                            </tr>
+                            <tr>
+                                <td>Hotjar</td>
+                                <td>Analyse de l'expérience utilisateur</td>
+                                <td>1 an</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>4. Gestion des cookies</h2>
+
+                    <h3>Paramètres du navigateur</h3>
+                    <p>Vous pouvez contrôler et supprimer les cookies via les paramètres de votre navigateur :</p>
+                    <ul>
+                        <li><strong>Chrome :</strong> Paramètres > Confidentialité > Cookies</li>
+                        <li><strong>Firefox :</strong> Préférences > Vie privée > Cookies</li>
+                        <li><strong>Safari :</strong> Préférences > Confidentialité > Gérer les données de site web</li>
+                        <li><strong>Edge :</strong> Paramètres > Cookies et autorisations de site</li>
+                    </ul>
+
+                    <h3>Notre outil de consentement</h3>
+                    <p>Utilisez les interrupteurs ci-dessus pour gérer vos préférences de cookies. Vos choix seront sauvegardés pour vos prochaines visites.</p>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>5. Impact sur votre expérience</h2>
+                    <p>Si vous désactivez certains cookies, certaines fonctionnalités de notre site peuvent ne pas fonctionner correctement :</p>
+                    <ul>
+                        <li>Cookies essentiels : Le site ne fonctionnera pas</li>
+                        <li>Cookies analytiques : Nous ne pourrons pas améliorer le site</li>
+                        <li>Cookies fonctionnels : Perte de personnalisation</li>
+                    </ul>
+                </div>
+
+                <div class="cookies-section">
+                    <h2>6. Mise à jour de cette politique</h2>
+                    <p>Nous pouvons mettre à jour cette politique des cookies. Les modifications importantes vous seront notifiées par email ou via une notification sur notre plateforme.</p>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Questions sur les cookies ?</h3>
+                    <p>Pour toute question concernant notre utilisation des cookies :</p>
+                    <p><strong>Email :</strong> privacy@djaapp.com</p>
+                    <p><strong>Adresse :</strong> Abidjan, Côte d'Ivoire</p>
+                    <p><strong>Téléphone :</strong> +225 07 99 25 76 98</p>
+                </div>
+
+                <div class="last-updated">
+                    Dernière mise à jour : 15 janvier 2025
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Djaapp</h3>
+                <p>Transformez votre commerce en Afrique avec notre plateforme mobile-first.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Produit</h4>
+                <ul class="footer-links">
+                    <li><a href="product.html">Fonctionnalités</a></li>
+                    <li><a href="pricing.html">Tarification</a></li>
+                    <li><a href="security.html">Sécurité</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="status.html">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Légal</h4>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Confidentialité</a></li>
+                    <li><a href="terms.html">Conditions</a></li>
+                    <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Djaapp. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cookie toggle functionality
+        document.querySelectorAll('.cookie-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const switchEl = this.querySelector('.toggle-switch');
+                const slider = this.querySelector('.toggle-slider');
+
+                if (switchEl.classList.contains('active')) {
+                    switchEl.classList.remove('active');
+                } else {
+                    switchEl.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

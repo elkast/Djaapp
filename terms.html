@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djaapp - Conditions d'Utilisation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4F46E5;
+            --primary-purple: #9333EA;
+            --accent-pink: #EC4899;
+            --orange-icon: #F97316;
+            --yellow-icon: #EAB308;
+            --green-check: #10B981;
+            --background-light: #F8FAFC;
+            --text-dark: #0F172A;
+            --text-gray: #64748B;
+            --footer-dark: #0F172A;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-light {
+            background: var(--background-light);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #DBEAFE, #F3E8FF);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+        }
+
+        /* Terms Content */
+        .terms-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .terms-intro {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .terms-intro p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .terms-section {
+            margin-bottom: 3rem;
+        }
+
+        .terms-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .terms-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+        }
+
+        .terms-section p {
+            margin-bottom: 1rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        .terms-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .terms-section li {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #EEF2FF, #F3E8FF);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .highlight-box h4 {
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info h3 {
+            color: var(--accent-pink);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #94A3B8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .terms-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                </div>
+                Djaapp
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="index.html#probleme" class="nav-link">Probleme</a></li>
+                <li><a href="index.html#solution" class="nav-link">Solution</a></li>
+                <li><a href="index.html#fonctionnalites" class="nav-link">Fonctionnalites</a></li>
+                <li><a href="index.html#equipe" class="nav-link">Equipe</a></li>
+                <li><a href="join.html" class="btn-join">Nous Rejoindre</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Terms Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Légal</div>
+                <h2 class="section-title">Conditions d'Utilisation</h2>
+                <p class="section-subtitle">Règles et conditions régissant l'utilisation de Djaapp</p>
+            </div>
+
+            <div class="terms-content">
+                <div class="terms-intro">
+                    <p>Bienvenue sur Djaapp ! Ces conditions d'utilisation régissent votre utilisation de notre plateforme. En utilisant Djaapp, vous acceptez d'être lié par ces conditions. Veuillez les lire attentivement.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>1. Acceptation des conditions</h2>
+                    <p>En accédant et en utilisant Djaapp, vous acceptez d'être lié par ces conditions d'utilisation, notre politique de confidentialité et toutes les lois et réglementations applicables. Si vous n'acceptez pas ces conditions, vous ne devez pas utiliser notre plateforme.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>2. Description du service</h2>
+                    <p>Djaapp est une plateforme e-commerce mobile-first conçue pour les commerçants africains. Nos services incluent :</p>
+                    <ul>
+                        <li>Création et gestion de boutiques en ligne</li>
+                        <li>Traitement des paiements via Mobile Money</li>
+                        <li>Gestion des inventaires et des commandes</li>
+                        <li>Outils d'analyse et de reporting</li>
+                        <li>Support client et formation</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2>3. Conditions d'éligibilité</h2>
+                    <p>Pour utiliser Djaapp, vous devez :</p>
+                    <ul>
+                        <li>Être âgé d'au moins 18 ans</li>
+                        <li>Être propriétaire ou gérant d'un commerce légal</li>
+                        <li>Fournir des informations exactes et à jour</li>
+                        <li>Respecter les lois et réglementations locales</li>
+                        <li>Ne pas avoir été exclu de nos services auparavant</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2>4. Inscription et compte</h2>
+
+                    <h3>Création de compte</h3>
+                    <p>Vous êtes responsable de maintenir la confidentialité de votre compte et de votre mot de passe. Vous acceptez de notifier immédiatement Djaapp de toute utilisation non autorisée de votre compte.</p>
+
+                    <h3>Informations exactes</h3>
+                    <p>Vous vous engagez à fournir des informations exactes, actuelles et complètes lors de l'inscription et à les maintenir à jour.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>5. Utilisation acceptable</h2>
+                    <p>Vous vous engagez à utiliser Djaapp uniquement pour des activités légales et à ne pas :</p>
+                    <ul>
+                        <li>Vendre des produits illégaux ou contrefaits</li>
+                        <li>Violer les droits de propriété intellectuelle d'autrui</li>
+                        <li>Harceler ou diffamer d'autres utilisateurs</li>
+                        <li>Transmettre des virus ou codes malveillants</li>
+                        <li>Tenter d'accéder sans autorisation à nos systèmes</li>
+                        <li>Utiliser la plateforme pour des activités frauduleuses</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2>6. Produits et contenu</h2>
+
+                    <h3>Responsabilité des produits</h3>
+                    <p>Vous êtes seul responsable de la légalité, de la qualité et de l'exactitude des descriptions de vos produits. Djaapp n'est pas responsable des produits vendus sur la plateforme.</p>
+
+                    <h3>Droits de propriété intellectuelle</h3>
+                    <p>Vous conservez tous les droits sur vos produits et contenu. En utilisant Djaapp, vous nous accordez une licence limitée pour afficher et promouvoir vos produits.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>7. Paiements et transactions</h2>
+
+                    <h3>Frais de service</h3>
+                    <p>Djaapp prélève des frais sur les transactions selon le plan tarifaire choisi. Ces frais sont clairement indiqués avant chaque transaction.</p>
+
+                    <h3>Remboursements</h3>
+                    <p>Les remboursements sont traités selon notre politique de remboursement, disponible dans la documentation utilisateur.</p>
+
+                    <div class="highlight-box">
+                        <h4>💰 Frais transparents</h4>
+                        <p>Nous nous engageons à une tarification claire et transparente. Aucun frais caché n'est appliqué à vos transactions.</p>
+                    </div>
+                </div>
+
+                <div class="terms-section">
+                    <h2>8. Résiliation</h2>
+
+                    <h3>Résiliation par l'utilisateur</h3>
+                    <p>Vous pouvez résilier votre compte à tout moment en contactant notre support ou via les paramètres de votre compte.</p>
+
+                    <h3>Résiliation par Djaapp</h3>
+                    <p>Nous nous réservons le droit de suspendre ou résilier votre compte en cas de violation de ces conditions ou d'activités suspectes.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>9. Limitation de responsabilité</h2>
+                    <p>Dans la mesure permise par la loi, Djaapp ne sera pas responsable des dommages indirects, accessoires ou consécutifs découlant de l'utilisation de notre plateforme. Notre responsabilité totale est limitée au montant payé par l'utilisateur au cours des 12 derniers mois.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>10. Modifications des conditions</h2>
+                    <p>Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications entrent en vigueur 30 jours après leur publication. Votre utilisation continue de la plateforme constitue l'acceptation des nouvelles conditions.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2>11. Droit applicable</h2>
+                    <p>Ces conditions sont régies par le droit ivoirien. Tout litige sera soumis à la compétence exclusive des tribunaux d'Abidjan.</p>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Questions sur les conditions ?</h3>
+                    <p>Si vous avez des questions sur ces conditions d'utilisation, contactez-nous :</p>
+                    <p><strong>Email :</strong> legal@djaapp.com</p>
+                    <p><strong>Adresse :</strong> Abidjan, Côte d'Ivoire</p>
+                    <p><strong>Téléphone :</strong> +225 07 99 25 76 98</p>
+                </div>
+
+                <div class="last-updated">
+                    Dernière mise à jour : 15 janvier 2025
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Djaapp</h3>
+                <p>Transformez votre commerce en Afrique avec notre plateforme mobile-first.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Produit</h4>
+                <ul class="footer-links">
+                    <li><a href="product.html">Fonctionnalités</a></li>
+                    <li><a href="pricing.html">Tarification</a></li>
+                    <li><a href="security.html">Sécurité</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="status.html">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Légal</h4>
+                <ul class="footer-links">
+                    <li><a href="privacy.html">Confidentialité</a></li>
+                    <li><a href="terms.html">Conditions</a></li>
+                    <li><a href="cookies.html">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Djaapp. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
